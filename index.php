@@ -2,16 +2,7 @@
 include_once("dbconnect.php");
 
 
-if (isset($_GET['operation'])) {
-  $id = $_GET['id'];
-  try {
-    $sql = "DELETE FROM book WHERE id='$id'";
-    $conn->exec($sql);
-    echo "<script> alert('Delete Success')</script>";
-  } catch(PDOException $e) {
-    echo "<script> alert('Delete Error')</script>";
-  }
-} 
+
 
 try {
 
@@ -21,7 +12,7 @@ $stmt->execute();
 // set the resulting array to associative
 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $book = $stmt->fetchAll(); 
-echo "<p><h1 align='center'>List of the book</h1></p>";
+echo "<p><h1 align='center'>Book Depository</h1></p>";
 echo "<table border='1' align='center'>
 <tr>
   <th>ID</th>
@@ -45,7 +36,7 @@ foreach($book as $book) {
     echo "<td>".$book['isbn']."</td>";
     echo "<td><a href='update.php?id=".$book['id']."&title=".$book['title']."&author=".$book['author']."&price=".$book['price'].
     "&description=".$book['description']."&publisher=".$book['publisher']."&isbn=".$book['isbn']." '>Update</a><br>
-    <a href='index.php?id=".$book['id']."&operation=del' onclick= 'return confirm(\"Are you sure want to delete this book?\");'>Delete</a></td>";
+    <a href='delete.php?id=".$book['id']."&operation=del' onclick= 'return confirm(\"Are you sure want to delete this book?\");'>Delete</a></td>";
     echo "</tr>";
 } 
 echo "</table>";
